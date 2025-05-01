@@ -4,7 +4,9 @@
   "main": "index.js",
   "scripts": {
     "electron": "electron ./src/electron.js",
-    "web": "node ./src/web.js"
+    "web": "node ./src/web.js",
+    "public":"node ./scripts/public.js",
+    "install-fontawesome":"node ./scripts/install-fontawesome.js"
   },
   "author": "",
   "license": "ISC",
