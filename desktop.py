@@ -33,5 +33,6 @@ eel.start('index.html',
           jinja_templates="templates",
           mode=None,
           close_callback=_stop,
+          block=True
         )
 
