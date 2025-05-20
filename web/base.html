@@ -7,9 +7,9 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
   <title>Institutul General al Oamenilor</title>
   {% if is_web %}
-  <link rel="stylesheet" href="{{url_for('static', filename='reset.css')}}">
-  <link rel="stylesheet" href="{{url_for('static', filename='all.min.css')}}">
-  <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+  <link rel="stylesheet" href="{{url_for('static', filename='/custom/css/reset.css')}}">
+  <link rel="stylesheet" href="{{url_for('static', filename='/fontawesome/css/all.min.css')}}">
+  <link rel="stylesheet" href="{{url_for('static', filename='/custom/css/style.css')}}">
   {% else %}
   <link rel="stylesheet" href="{{ static_custom_path }}reset.css">
   <link rel="stylesheet" href="{{ fontawesome_path }}css{{ sep }}all.min.css">

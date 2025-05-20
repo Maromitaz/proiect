@@ -1,7 +1,7 @@
 from flask import Flask, render_template
 from pyppeteer import launch
 from pyppeteer.browser import Browser
-import threading, random, polling, requests, asyncio
+import threading, random, polling, requests, asyncio, os
 import settings
 
 app = Flask(__name__, template_folder="web/templates")
@@ -20,21 +20,42 @@ def run_flask():
 
 localhost = f"http://localhost:{port}"
 
-async def get_browser_pages(browser: Browser):
-    pages = await browser.pages()
-    return not pages
 async def open_browser():
-    browser = await launch(headless=False, args=[f"--app={localhost}"])
-
-    polling.poll(
-        lambda: get_browser_pages(browser) == True,
-        step=1,
-        poll_forever=True,
+    browser = await launch(
+        executablePath=detect_chrome(), 
+        headless=False, 
+        args=[f"--app={localhost}"]
     )
 
-    browser.close()
+    # while True:
+    #     pages = await browser.pages()
+    #     if not pages:
+    #         break
+    #     await asyncio.sleep(0.5)
+    await asyncio.sleep(2)
 
-# if(__name__ == "__main__"):
+    # loop = asyncio.get_event_loop()
+
+    polling.poll(
+        lambda: (not asyncio.get_event_loop().run_until_complete(browser.pages())),
+        step=0.5,
+        poll_forever=True,
+    )
+    print("IT WORKS")
+    await browser.close()
+
+def detect_chrome():
+    paths = [
+        "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+        "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
+        f"{os.getenv("LOCALAPPDATA")}\\Google\\Chrome\\Application\\chrome.exe"
+    ]
+    for path in paths:
+        if(os.path.isfile(path)):
+            return path
+    return ""
+
+if(__name__ == "__main__"):
 #     flask_thread = threading.Thread(target=run_flask, daemon=True)
 #     flask_thread.start()
 
@@ -45,4 +66,5 @@ async def open_browser():
 #         poll_forever=True,
 #     )
     
-    # asyncio.run(open_browser())
+    browser = asyncio.run(open_browser())
+    
