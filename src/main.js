@@ -47,10 +47,10 @@ function renderTempalte(err, html, res) {
                 if(!res){
                     const fisier = linie.match(/{!\s*(.*?)\s*!}/)[1].replace(/\s+/g, '');
                     const css = path.join(`${__dirname}`, `..`, `/public${fisier}`);
-                    final_html += `<link rel="stylesheet" href="${css}"></link>`;
+                    final_html += `<link rel="stylesheet" href="${css}"></link>\n`;
                 }else{
                     const fisier = linie.match(/{!\s*(.*?)\s*!}/)[1].replace(/\s+/g, '');
-                    final_html += `<link rel="stylesheet" href="${fisier}"></link>`;
+                    final_html += `<link rel="stylesheet" href="${fisier}"></link\n>`;
                 }
             } else {
                 final_html += `${linie}${endLine}`;
